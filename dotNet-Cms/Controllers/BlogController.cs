@@ -47,6 +47,13 @@ namespace dotNet_Cms
             CustomActionResult<PostModel> result = await _logservice.GetBlogById(id);
             return Ok(result);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateBlog(PostModel model)
+        {
+            CustomActionResult<PostModel> result = await _logservice.UpdateBlog(model);
+            return Ok(result);
+        }
     }
 }
 

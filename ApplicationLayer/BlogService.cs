@@ -27,9 +27,9 @@ namespace ApplicationLayer
             return await _respository.DeleteBlog(id);
         }
 
-        public Task<PostModel> UpdateBlog(PostModel model)
+        public async Task<CustomActionResult<PostModel>> UpdateBlog(PostModel model)
         {
-            throw new NotImplementedException();
+            return await _respository.UpdateBlog(model);
         }
 
         public async Task<CustomActionResult<PostModel>> GetBlogById(int id)

@@ -107,10 +107,29 @@ namespace InfrastructureLayer
             }
             return _result;
         }
-        public async Task<bool> UpdateBlog(PostModel model)
+        public async Task<CustomActionResult<PostModel>> UpdateBlog(PostModel model)
         {
-            throw new NotImplementedException();
+            CustomActionResult<PostModel> _result = new CustomActionResult<PostModel>();
+            try
+            {
+                CustomActionResult<System.Data.IDbConnection> connection = await _databaseConnection.GetConnection();
+                _result.IsSuccess = connection.IsSuccess;
+                _result.Message = connection.Message;
+                if (!_result.IsSuccess) return _result;
 
+                var command = "prc_update_blog";
+
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add(name: "@Id", value: model.id);
+                parameters.Add(name: "@title", value: model.Title);
+                parameters.Add(name: "@body", value: model.Body);
+
+
+                _result.Data = (await connection.Data.QueryAsync<PostModel>(command, parameters, commandType: System.Data.CommandType.StoredProcedure)).FirstOrDefault();
+                _result.IsSuccess = true;
+            }
+            catch { throw new NotImplementedException(); }
+            return _result;
         }
 
         public async Task<CustomActionResult<List<PostModel>>> GetBlogs()
