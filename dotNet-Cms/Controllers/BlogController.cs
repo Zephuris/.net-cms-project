@@ -2,6 +2,7 @@ using DomainLayer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ApplicationLayer;
+using Microsoft.AspNetCore.Http.HttpResults;
 namespace dotNet_Cms
 {
     [ApiController]
@@ -37,6 +38,13 @@ namespace dotNet_Cms
 
             CustomActionResult<List<PostModel>> result = await _logservice.GetBlogs();
 
+            return Ok(result);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> GetBlogById(int id)
+        {
+            CustomActionResult<PostModel> result = await _logservice.GetBlogById(id);
             return Ok(result);
         }
     }

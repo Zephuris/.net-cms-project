@@ -32,9 +32,9 @@ namespace ApplicationLayer
             throw new NotImplementedException();
         }
 
-        public Task<PostModel> GetBlogById(int id)
+        public async Task<CustomActionResult<PostModel>> GetBlogById(int id)
         {
-            throw new NotImplementedException();
+            return await _respository.GetBlogById(id);
         }
 
         public async Task<CustomActionResult<List<PostModel>>> GetBlogs()

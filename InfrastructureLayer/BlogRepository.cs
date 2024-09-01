@@ -60,7 +60,6 @@ namespace InfrastructureLayer
             {
                 CustomActionResult<System.Data.IDbConnection> connection = await _databaseConnection.GetConnection();
                 _result = connection.IsSuccess;
-
                 if (!_result) return _result;
                 var command = "prc_delete_blog";
 
@@ -82,10 +81,31 @@ namespace InfrastructureLayer
             }
             return _result;
         }
-        public async Task<PostModel> GetBlogById(int id)
+        public async Task<CustomActionResult<PostModel>> GetBlogById(int id)
         {
-            throw new NotImplementedException();
+            CustomActionResult<PostModel> _result = new CustomActionResult<PostModel>();   
+            try
+            {
+                CustomActionResult<System.Data.IDbConnection> connection = await _databaseConnection.GetConnection();
+                _result.IsSuccess = connection.IsSuccess;
+                _result.Message = connection.Message;
+                if (!_result.IsSuccess) return _result;
 
+                var command = "prc_blog_byId";
+                   
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add(name: "@Id", value: id);
+
+
+                _result.Data = (await connection.Data.QueryAsync<PostModel>(command, parameters, commandType: System.Data.CommandType.StoredProcedure)).FirstOrDefault();
+                _result.IsSuccess = true;
+            }
+            catch
+            {
+                throw new NotImplementedException();
+
+            }
+            return _result;
         }
         public async Task<bool> UpdateBlog(PostModel model)
         {

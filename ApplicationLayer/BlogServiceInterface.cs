@@ -11,7 +11,7 @@ namespace ApplicationLayer
     {
         Task<CustomActionResult> CreateBlog(PostModel model);
         Task<CustomActionResult<List<PostModel>>> GetBlogs();
-        Task<PostModel> GetBlogById(int id);
+        Task<CustomActionResult<PostModel>> GetBlogById(int id);
         Task<PostModel> UpdateBlog(PostModel model);
         Task<bool> DeleteBlog(int ids);
 
