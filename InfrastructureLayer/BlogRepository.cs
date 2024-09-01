@@ -95,9 +95,27 @@ namespace InfrastructureLayer
 
         public async Task<CustomActionResult<List<PostModel>>> GetBlogs()
         {
+            CustomActionResult<List<PostModel>> _result = new CustomActionResult<List<PostModel>>();
+            try
+            {
+                CustomActionResult<System.Data.IDbConnection> connection = await _databaseConnection.GetConnection();
+                _result.IsSuccess = connection.IsSuccess;
+                _result.Message = connection.Message;
+                if (!_result.IsSuccess) return _result;
+
+                var command = "prc_get_blogs";
+
+
+
+
+                _result.Data = (await connection.Data.QueryAsync<PostModel>(command, null, commandType: System.Data.CommandType.StoredProcedure)).ToList();
+                _result.IsSuccess = true;
+            }
+            catch (Exception ex)
             {
                 throw new NotImplementedException();
             }
+            return _result;
 
         }
     }
