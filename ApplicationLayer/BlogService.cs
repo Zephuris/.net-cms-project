@@ -22,9 +22,9 @@ namespace ApplicationLayer
             return await _respository.CreateBlog(model);
 
         }
-        public Task<bool> DeleteBlog(int id)
+        public async Task<bool> DeleteBlog(int id)
         {
-            throw new NotImplementedException();
+            return await _respository.DeleteBlog(id);
         }
 
         public Task<PostModel> UpdateBlog(PostModel model)
