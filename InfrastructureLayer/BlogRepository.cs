@@ -3,6 +3,7 @@ using DomainLayer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,16 +12,16 @@ namespace InfrastructureLayer
     public class BlogRepository : IBlogRepository
     {
         private readonly IDatabaseConnection _databaseConnection;
-        CustomActionResult _result;
 
         public BlogRepository(IDatabaseConnection databaseConnection)
         {
             _databaseConnection = databaseConnection;
-            _result = new CustomActionResult();
+
         }
 
         public async Task<CustomActionResult> CreateBlog(PostModel model)
         {
+            CustomActionResult _result = new CustomActionResult();
             try
             {
                 CustomActionResult<System.Data.IDbConnection> connection = await _databaseConnection.GetConnection();
@@ -32,6 +33,7 @@ namespace InfrastructureLayer
 
 
                 DynamicParameters parameters = new DynamicParameters();
+                parameters.Add(name: "@Id", value: model.id);
                 parameters.Add(name: "@title", value: model.Title);
                 parameters.Add(name: "@body", value: model.Body);
 
@@ -52,8 +54,33 @@ namespace InfrastructureLayer
 
         public async Task<bool> DeleteBlog(int id)
         {
-            throw new NotImplementedException();
+            bool _result;
 
+            try
+            {
+                CustomActionResult<System.Data.IDbConnection> connection = await _databaseConnection.GetConnection();
+                _result = connection.IsSuccess;
+
+                if (!_result) return _result;
+                var command = "prc_delete_blog";
+
+
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add(name: "@Id", value: id);
+
+
+
+                await connection.Data.ExecuteAsync(command, parameters, commandType: System.Data.CommandType.StoredProcedure);
+                _result = true;
+
+
+            }
+            catch (Exception ex)
+            {
+                throw new NotImplementedException();
+
+            }
+            return _result;
         }
         public async Task<PostModel> GetBlogById(int id)
         {
