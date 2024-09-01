@@ -6,7 +6,14 @@ using System.Threading.Tasks;
 
 namespace DomainLayer
 {
-    internal class CustomeActionResultModel
+    public class CustomActionResult
     {
+        public bool IsSuccess { get; set; }
+        public string Message { get; set; }
+    }
+
+    public class CustomActionResult<T> : CustomActionResult
+    {
+        public T Data { get; set; }
     }
 }
