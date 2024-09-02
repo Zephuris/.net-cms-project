@@ -149,6 +149,7 @@ namespace InfrastructureLayer
 
                 _result.Data = (await connection.Data.QueryAsync<PostModel>(command, null, commandType: System.Data.CommandType.StoredProcedure)).ToList();
                 _result.IsSuccess = true;
+
             }
             catch (Exception ex)
             {
