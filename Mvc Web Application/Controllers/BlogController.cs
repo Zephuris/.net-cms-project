@@ -1,4 +1,5 @@
-﻿ using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
 using Mvc_Web_Application.Models;
 using Newtonsoft.Json;
@@ -10,10 +11,11 @@ using System.Reflection;
 
 namespace Mvc_Web_Application.Controllers
 {
+
     public class BlogController : Controller
     {
 
-        Uri baseAddress = new Uri("https://localhost:7181/api");
+        Uri baseAddress = new Uri("https://localhost:7181/api/Blog");
         private readonly HttpClient _client;
         public BlogController()
         {
@@ -30,7 +32,7 @@ namespace Mvc_Web_Application.Controllers
             {
 
                 CustomActionResult<List<PostViewModel>> posts = new CustomActionResult<List<PostViewModel>>();
-                HttpResponseMessage response = _client.GetAsync(_client.BaseAddress + "/Blog/GetBlogs").Result;
+                HttpResponseMessage response = _client.GetAsync(_client.BaseAddress + "/GetBlogs").Result;
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -53,7 +55,7 @@ namespace Mvc_Web_Application.Controllers
         {
             using (var client = new HttpClient())
             {
-                var postTask = _client.PostAsJsonAsync<PostViewModel>(_client.BaseAddress + "/Blog/UpdateBlog", post);
+                var postTask = _client.PostAsJsonAsync<PostViewModel>(_client.BaseAddress + "/UpdateBlog", post);
                 postTask.Wait();
 
                 var result = postTask.Result;
@@ -70,7 +72,7 @@ namespace Mvc_Web_Application.Controllers
         {
             using (var client = new HttpClient())
             {
-                var postTask = _client.PostAsJsonAsync<PostViewModel>(_client.BaseAddress + "/Blog/CreateBlog", post);
+                var postTask = _client.PostAsJsonAsync<PostViewModel>(_client.BaseAddress + "/CreateBlog", post);
                 postTask.Wait();
 
                 var result = postTask.Result;
@@ -92,7 +94,7 @@ namespace Mvc_Web_Application.Controllers
                 {
                 new KeyValuePair<string, string>("id", id.ToString())
                 });
-                var response = _client.PostAsync(_client.BaseAddress + $"/Blog/DeletBlog?id={id}", content);
+                var response = _client.PostAsync(_client.BaseAddress + $"/DeletBlog?id={id}", content);
 
 
 
@@ -125,7 +127,7 @@ namespace Mvc_Web_Application.Controllers
                 new KeyValuePair<string, string>("id", id.ToString())
                 });
                 CustomActionResult<PostViewModel> post = new CustomActionResult<PostViewModel>();
-                HttpResponseMessage response = (await _client.PostAsJsonAsync<CustomActionResult<PostViewModel>>(_client.BaseAddress + $"/Blog/GetBlogById?id={id}", post));
+                HttpResponseMessage response = (await _client.PostAsJsonAsync<CustomActionResult<PostViewModel>>(_client.BaseAddress + $"/GetBlogById?id={id}", post));
 
                 if (response.IsSuccessStatusCode)
                 {

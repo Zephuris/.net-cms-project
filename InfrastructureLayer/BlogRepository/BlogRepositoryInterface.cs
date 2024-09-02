@@ -1,19 +1,19 @@
-﻿using DomainLayer;
+﻿using DomainLayer.Blog;
+using DomainLayer.entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ApplicationLayer
+namespace InfrastructureLayer.BlogRepository
 {
-    public interface IBlogService
+    public interface IBlogRepository
     {
         Task<CustomActionResult> CreateBlog(PostModel model);
         Task<CustomActionResult<List<PostModel>>> GetBlogs();
         Task<CustomActionResult<PostModel>> GetBlogById(int id);
         Task<CustomActionResult<PostModel>> UpdateBlog(PostModel model);
-        Task<bool> DeleteBlog(int ids);
-
+        Task<bool> DeleteBlog(int id);
     }
 }

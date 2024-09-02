@@ -2,15 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace DomainLayer
+namespace DomainLayer.Users
 {
-    public class UserModel
+    public class LogonRequest
     {
-        public int Id { get; set; }
+        [JsonRequired]
         public string Username { get; set; }
+
         public string psw { get; set; }
-        public string email { get; set; }
     }
 }

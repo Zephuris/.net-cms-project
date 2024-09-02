@@ -1,18 +1,20 @@
 ﻿using Dapper;
-using DomainLayer;
+using DomainLayer.entities;
+using DomainLayer.Users;
+using InfrastructureLayer.Database;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InfrastructureLayer
+namespace InfrastructureLayer.User
 {
     public class UserRepository : IUserRepository
     {
         private readonly IDatabaseConnection _databaseConnection;
-        
-        public  UserRepository(IDatabaseConnection databaseConnection)
+
+        public UserRepository(IDatabaseConnection databaseConnection)
         {
             _databaseConnection = databaseConnection;
         }
@@ -34,15 +36,9 @@ namespace InfrastructureLayer
                 parameters.Add(name: "@psw", value: request.psw);
 
 
-                _result.Data = (await connection.Data.QueryAsync<GetUserByUsernameAndPasswordModel>(command, parameters, commandType: System.Data.CommandType.StoredProcedure)).FirstOrDefault();       
+                _result.Data = (await connection.Data.QueryAsync<GetUserByUsernameAndPasswordModel>(command, parameters, commandType: System.Data.CommandType.StoredProcedure)).FirstOrDefault();
 
-
- /*               _result.Data
-                {
-                    UserId = parameters.Get<int>("@Id"),
-                    RoleId = parameters.Get<int>("@RoleId"),
-                };*/
-                if(_result.Data.UserId != 0)
+                if (_result.Data.UserId != 0)
                 {
                     _result.IsSuccess = true;
                 }
@@ -60,6 +56,6 @@ namespace InfrastructureLayer
                 _result.Message = "Error Geting Userinfo.";
             }
             return _result;
-            }
         }
     }
+}

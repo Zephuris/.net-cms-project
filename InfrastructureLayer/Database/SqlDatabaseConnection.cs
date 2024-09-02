@@ -1,5 +1,4 @@
-﻿using DomainLayer;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Data;
@@ -7,8 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
+using DomainLayer.entities;
+using DomainLayer.Database;
 
-namespace InfrastructureLayer
+namespace InfrastructureLayer.Database
 {
     public class SqlDatabaseConnection : IDatabaseConnection
     {

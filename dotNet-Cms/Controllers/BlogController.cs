@@ -1,10 +1,12 @@
-using DomainLayer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ApplicationLayer;
 using Microsoft.AspNetCore.Http.HttpResults;
+using ApplicationLayer.Blog;
+using DomainLayer.Blog;
+using DomainLayer.entities;
 namespace dotNet_Cms
 {
+    //[Authorize]
     [ApiController]
     [Route("api/[controller]/[action]")]
     public class BlogController : ControllerBase
@@ -15,7 +17,7 @@ namespace dotNet_Cms
         {
             _logservice = blogservice;
         }
-
+    
         [HttpPost]
         public async Task<IActionResult> CreateBlog(PostModel model)
         {

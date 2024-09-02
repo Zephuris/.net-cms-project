@@ -16,6 +16,8 @@
                     <th>@Html.DisplayNameFor(m => m.Data[0].Title)</th>
                     <th>@Html.DisplayNameFor(m => m.Data[0].Body)</th>
                     <th>@Html.DisplayNameFor(m => m.Data[0].Author)</th>
+                    <th>@Html.DisplayNameFor(m => m.Data[0].CreatedDate)</th>
+                    <th>@Html.DisplayNameFor(m => m.Data[0].UpdatedDate)</th>h>
                 </tr>
             </thead>
             <tbody>
@@ -25,6 +27,13 @@
                         <td>@Html.DisplayFor(m => post.Title)</td>
                         <td>@Html.DisplayFor(m => post.Body)</td>
                         <td>@Html.DisplayFor(m => post.Author)</td>
+                        <td>@Html.DisplayFor(m => post.CreatedDate)</td>
+                        <td>@Html.DisplayFor(m => post.UpdatedDate)</td>
+                        <td><a asp-action="UpdateBlog" asp-controller="Blog" asp-route-id="@post.id" class="btn btn-primary">Update</a></td>
+
+                        <td><a asp-action="DeleteBlog" asp-controller="Blog" asp-route-id="@post.id" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this post?');">Delete</a></td>
+
+                        <td><a asp-action="GetBlogs" asp-controller="Blog" asp-route-id="@post.id" class="btn btn-info">Details</a></td>
                     </tr>
                 }
             </tbody>

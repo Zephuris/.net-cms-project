@@ -1,5 +1,6 @@
-﻿using DomainLayer;
-using InfrastructureLayer;
+﻿using DomainLayer.entities;
+using DomainLayer.Users;
+using InfrastructureLayer.User;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -9,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ApplicationLayer
+namespace ApplicationLayer.User
 {
     public class UserService : IUserService
     {

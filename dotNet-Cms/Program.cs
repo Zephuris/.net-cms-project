@@ -1,7 +1,10 @@
-
-using ApplicationLayer;
-using DomainLayer;
-using InfrastructureLayer;
+using ApplicationLayer.Blog;
+using ApplicationLayer.User;
+using DomainLayer.Database;
+using DomainLayer.Users;
+using InfrastructureLayer.BlogRepository;
+using InfrastructureLayer.Database;
+using InfrastructureLayer.User;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;

@@ -1,5 +1,7 @@
 ﻿using Dapper;
-using DomainLayer;
+using DomainLayer.Blog;
+using DomainLayer.entities;
+using InfrastructureLayer.Database;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +9,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InfrastructureLayer
+namespace InfrastructureLayer.BlogRepository
 {
     public class BlogRepository : IBlogRepository
     {
@@ -36,6 +38,8 @@ namespace InfrastructureLayer
                 parameters.Add(name: "@Id", value: model.id);
                 parameters.Add(name: "@title", value: model.Title);
                 parameters.Add(name: "@body", value: model.Body);
+                parameters.Add(name: "@CreatedDate", value: DateTime.Now);
+                parameters.Add(name: "@UpdatedDate", value: DateTime.Now);
 
 
                 await connection.Data.ExecuteAsync(command, parameters, commandType: System.Data.CommandType.StoredProcedure);
@@ -83,7 +87,7 @@ namespace InfrastructureLayer
         }
         public async Task<CustomActionResult<PostModel>> GetBlogById(int id)
         {
-            CustomActionResult<PostModel> _result = new CustomActionResult<PostModel>();   
+            CustomActionResult<PostModel> _result = new CustomActionResult<PostModel>();
             try
             {
                 CustomActionResult<System.Data.IDbConnection> connection = await _databaseConnection.GetConnection();
@@ -92,7 +96,7 @@ namespace InfrastructureLayer
                 if (!_result.IsSuccess) return _result;
 
                 var command = "prc_blog_byId";
-                   
+
                 DynamicParameters parameters = new DynamicParameters();
                 parameters.Add(name: "@Id", value: id);
 

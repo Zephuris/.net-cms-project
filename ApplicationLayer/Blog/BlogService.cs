@@ -1,12 +1,13 @@
-﻿using DomainLayer;
-using InfrastructureLayer;
+﻿using DomainLayer.Blog;
+using DomainLayer.entities;
+using InfrastructureLayer.BlogRepository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ApplicationLayer
+namespace ApplicationLayer.Blog
 {
     public class BlogService : IBlogService
     {

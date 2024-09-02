@@ -10,7 +10,7 @@ namespace Mvc_Web_Application.Models
 {
     public class PostViewModel : EntityBlogModel
     {
-        [DisplayName("Title")]  
+        [DisplayName("Title")]
         public string Title { get; set; }
         [Required]
         public string Body { get; set; }

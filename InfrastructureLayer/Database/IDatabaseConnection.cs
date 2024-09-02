@@ -1,4 +1,4 @@
-﻿using DomainLayer;
+﻿using DomainLayer.entities;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace InfrastructureLayer
+namespace InfrastructureLayer.Database
 {
     public interface IDatabaseConnection
     {

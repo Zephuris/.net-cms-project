@@ -1,5 +1,5 @@
-﻿using ApplicationLayer;
-using DomainLayer;
+﻿using ApplicationLayer.User;
+using DomainLayer.Users;
 using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 
