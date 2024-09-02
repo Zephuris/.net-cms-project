@@ -1,0 +1,31 @@
+﻿@model CustomActionResult<PostViewModel>
+
+@{
+    ViewBag.Title = "Post Details";
+}
+
+<h2>Post Details</h2>
+
+@if (Model.IsSuccess)
+{
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">@Model.Data.Title</h3>
+        </div>
+        <div class="panel-body">
+            <p><strong>Author:</strong> @Model.Data.Author</p>
+            <p><strong>Content:</strong></p>
+            <p>@Model.Data.Body</p>
+        </div>
+    </div>
+}
+else
+{
+    <div class="alert alert-danger">
+        <strong>Error:</strong> @Model.Message
+    </div>
+}
+
+<p>
+    <a href="@Url.Action("Index", "Post")" class="btn btn-primary">Back to Post List</a>
+</p>

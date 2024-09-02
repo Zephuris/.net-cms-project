@@ -1,0 +1,45 @@
+﻿@model CustomActionResult<List<PostViewModel>>
+
+@{
+    ViewBag.Title = "Post List";
+}
+
+<h2>Post List</h2>
+
+@if (Model.IsSuccess)
+{
+    @if (Model.Data != null && Model.Data.Any())
+    {
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(m => m.Data[0].Title)</th>
+                    <th>@Html.DisplayNameFor(m => m.Data[0].Body)</th>
+                    <th>@Html.DisplayNameFor(m => m.Data[0].Author)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var post in Model.Data)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(m => post.Title)</td>
+                        <td>@Html.DisplayFor(m => post.Body)</td>
+                        <td>@Html.DisplayFor(m => post.Author)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="alert alert-info">
+            No posts available.
+        </div>
+    }
+}
+else
+{
+    <div class="alert alert-danger">
+        @Model.Message
+    </div>
+}
