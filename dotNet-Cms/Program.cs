@@ -2,19 +2,35 @@
 using ApplicationLayer;
 using DomainLayer;
 using InfrastructureLayer;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using System.Configuration;
+using System.Text;
 
 namespace dotNet_Cms
 {
     public class Program
     {
         public static void Main(string[] args)
-        {
+      {
             var builder = WebApplication.CreateBuilder(args);
             ConfigurationManager configuration = builder.Configuration;
 
+            builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(
+                           options =>
+                           {
+                               options.TokenValidationParameters = new TokenValidationParameters()
+                               {
+                                   ValidateIssuer = false,
+                                   ValidateAudience = false,
+                                   ValidateLifetime = true,
+                                   ValidateIssuerSigningKey = true,
+                                   IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration.GetSection("JWT:Key").Value)),
+                                   ClockSkew = TimeSpan.Zero
 
+                               };
+                           });
             // Add services to the container.
 
             builder.Services.AddControllers();
@@ -24,6 +40,11 @@ namespace dotNet_Cms
 
             builder.Services.AddOptions();
             builder.Services.Configure<SqlDatabaseConnectionModel>(configuration.GetSection("DatabaseSetting"));
+            builder.Services.Configure<JwtConfigModel>(configuration.GetSection("JWT"));
+
+            builder.Services.AddSingleton<IUserRepository, UserRepository>();
+            builder.Services.AddSingleton<IUserService, UserService>();
+
             builder.Services.AddSingleton<IDatabaseConnection, SqlDatabaseConnection>();
             builder.Services.AddSingleton<IBlogRepository, BlogRepository>();
             builder.Services.AddSingleton<IBlogService, BlogService>();
