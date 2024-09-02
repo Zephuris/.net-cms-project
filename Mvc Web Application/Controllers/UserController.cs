@@ -18,7 +18,12 @@ namespace Mvc_Web_Application.Controllers
             _client = new HttpClient();
             _client.BaseAddress = baseAddress ;
         }
-       [Route("user/login")]
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
+        }
+        [HttpPost]
         public async Task<IActionResult> Login(LogonRequestViewModel request)
         {
 
@@ -32,13 +37,14 @@ namespace Mvc_Web_Application.Controllers
                 {
                     var responseModel = await result.Content.ReadFromJsonAsync<CustomActionResult<string>>();
                     var jwtToken = responseModel.Data;
-                    _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
-                    return RedirectToAction("user");
+                    ///_client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwtToken);
+                    Response.Headers["Authorization"] = $"Bearer {jwtToken}";
+                    return RedirectToAction("Index", "Home");
                 }
             }
             ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator.");
 
-            return View("index");
+            return View(request);
 
 
 
